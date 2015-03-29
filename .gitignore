@@ -1,0 +1,34 @@
+*.swp
+wordlists/
+*.pyc
+app.db
+todo
+fimiwal.log
+migrations/
+# Distribution / packaging
+db_repository/
+ubuntu14.iso
+*.qcow2
+
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+__pycache__/
+.vagrant/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+

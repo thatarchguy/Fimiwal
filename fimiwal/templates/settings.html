@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% set active_page = "settings" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_messages %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_tasks %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_alerts %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Change Settings
+            </div>
+            <div class="panel-body">
+                <form id="general" method="POST" class="form-horizontal">
+                    {{ GeneralForm.hidden_tag() }}
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        {{ GeneralForm.email }}<span style="color: red;">*</span>
+                        {% for error in GeneralForm.email.errors %}
+                            <br /><span style="color: red;">[{{error}}]</span>
+                        {% endfor %}
+                        {% if error != None %}
+                            <br /><span style="color: red;">{{ error }}</span>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Change Password
+            </div>
+            <div class="panel-body">
+                <form id="password" method="POST" class="form-horizontal">
+                    {{ ChangePassForm.hidden_tag() }}
+                    <div class="form-group">
+                        <label for="currentpass">Current Password:</label>
+                        {{ ChangePassForm.currentPass }}<span style="color: red;">*</span>
+                        {% for error in ChangePassForm.currentPass.errors %}
+                            <br /><span style="color: red;">[{{error}}]</span>
+                        {% endfor %}
+                        {% if error != None %}
+                            <br /><span style="color: red;">{{ error }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="newpass">New Password: </label>
+                        {{ ChangePassForm.newPass }}<span style="color: red;">*</span>
+                        {% for error in ChangePassForm.newPass.errors %}
+                            <br /><span style="color: red;">[{{error}}]</span>
+                        {% endfor %}
+
+                    </div>
+                    <div class="form-group">
+                        <label for="newpassverify">New Password Verify:</label>
+                        {{ ChangePassForm.newPassVerify }}<span style="color: red;">*</span>
+                        {% for error in ChangePassForm.newPassVerify.errors %}
+                            <br /><span style="color: red;">[{{error}}]</span>
+                        {% endfor %}
+
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+

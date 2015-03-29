@@ -1,0 +1,50 @@
+{% include "head.html" %}
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Please Sign In</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            <ul class=flashes>
+                            {% for message in messages %}
+                                <li><span style="color:red">{{ message | safe }}</span></li>
+                            {% endfor %}
+                            </ul>
+                          {% endif %}
+                        {% endwith %}
+                        <form action="" method=post role="form">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" id="username" placeholder="Username" name="username" type="username" autofocus required>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" id="password" placeholder="Password" name="password" type="password" value="" required>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input id= "remember_me" name="remember_me" type="checkbox" value="Remember Me">Remember Me
+                                    </label>
+                                </div>
+                                <div class="controls">
+                                    <button type="submit" class="btn btn-lg btn-success btn-block">Signin</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% include "scripts.html" %}
+
+</body>
+
+</html>
+
