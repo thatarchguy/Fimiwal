@@ -23,17 +23,17 @@ class Testfimiwal(LiveServerTestCase):
     def create_app(self):
         app.config.from_object('config.TestConfiguration')
         SQLALCHEMY_DATABASE_URI = app.config['SQLALCHEMY_DATABASE_URI']
-        print SQLALCHEMY_DATABASE_URI
+        print(SQLALCHEMY_DATABASE_URI)
 
         return app
 
     def setUp(self):
-        print "CREATING DB"
+        print("CREATING DB")
         db.create_all()
         db.session.commit()
 
     def tearDown(self):
-        print "TEARING DOWN!"
+        print("TEARING DOWN!")
         db.session.remove()
         db.drop_all()
 
@@ -41,9 +41,9 @@ class Testfimiwal(LiveServerTestCase):
         #u = models.Clients(name="testClient", date_added=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         #db.session.add(u)
         #db.session.commit()
-        print "DATA ADDED!"
+        print("DATA ADDED!")
 
-        print "QUERYING DATABASE"
+        print("QUERYING DATABASE")
         #clientID = models.Clients.query.filter_by(name="testClient").one().id
         #print clientID
 
