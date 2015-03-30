@@ -4,9 +4,11 @@ from wtforms.validators import DataRequired, Required, EqualTo
 from fimiwal import models, db
 
 
-class randomForm(Form):
-    aws             = StringField(u'awskey')
-
+class AddClient(Form):
+    email           = StringField(u'email', validators=[DataRequired()])
+    ip              = StringField(u'ip')
+    ident           = StringField(u'ident')
+    ssh             = StringField(u'ssh')
 
 
 class SettingsPass(Form):

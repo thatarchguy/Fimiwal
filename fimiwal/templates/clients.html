@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% set active_page = "view" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_messages %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_tasks %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_alerts %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Client Ident</th>
+            <th>Email</th>
+            <th>Date Added</th>
+            <th>IP Address</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entry in entries %}
+        <tr>
+            <td>{{ entry.ident }} </td>
+            <td>{{ entry.email }} </td>
+            <td>{{ entry.date_added }} </td>
+            <td>{{ entry.ip }}</td>
+            <td><a class="btn" href="client/{{ entry.id }}/admin/">Admin</a>
+        </tr>
+     {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
+

@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% set active_page = "clients" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_messages %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_tasks %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_alerts %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Details
+            </div>
+            <div class="panel-body">
+            <table width=60%>
+              <tr ><td><strong>Name: </strong></td><td><span id="clientName" class="editable_name">{{ client.ident }}</span></td><td><i class="fa fa-edit fa-fw jeditable-activate"></i></td></tr>
+              <tr><td><strong>Date added: </strong></td><td><span id="clientDate" class="editable_date">{{ client.date_added }}</span></td><td>  <i class="fa fa-edit fa-fw jeditable-activate"></i></td></tr>
+              <tr><td><strong>Contact Email: </strong></td><td><span id="clientEmail" class="editable_email">{{ client.email }}</span></td><td>  <i class="fa fa-edit fa-fw jeditable-activate"></i></td></tr>
+            </table>
+            <a class="btn btn-default" href="/client/{{ client.id }}/scan">Force Scan</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Delete Client
+             </div>
+            <div class="panel-body">
+            <a class="btn btn-danger" id="deletebtn" disabled="disabled" href="/client/{{ client.id }}/delete/">Delete</a>
+            <br />
+            <input type="checkbox" id="deletechk">   Are you sure?</input>
+            </div>
+        </div>
+    </div>
+</div>
+<h2>Scans</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for scan in scans %}
+        <tr>
+            <td>{{ scan.date }}</td>
+            <td>{{ scan.status }}</td>
+            {% if scan.status == "change" %}
+            <td><a class="btn btn-danger" id="viewDiff" href="/admin/{{ client.id }}/view/{{ scan.id }}">View Diff</a></td>
+            {% else %}
+            <td></td>
+            {% endif %}
+        <tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $("#deletechk").click(function() {
+      $("#deletebtn").attr("disabled", !this.checked);
+    });
+});
+
+</script>
+
+{% endblock %}
