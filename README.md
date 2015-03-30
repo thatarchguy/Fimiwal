@@ -8,7 +8,7 @@ Runs on python3.4
 ## Installation
 
 ```    
-    pip install -r requirements.txt
+pip install -r requirements.txt
 # Create the sqlite database
 python manage.py createdb
 #OR
