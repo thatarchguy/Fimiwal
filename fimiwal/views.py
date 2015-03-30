@@ -1,7 +1,7 @@
 from flask import render_template, request, flash, redirect, url_for
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from fimiwal import app, db, models, login_manager, bcrypt
-from .forms import randomForm, SettingsPass, SettingsGeneral
+from .forms import SettingsPass, SettingsGeneral, AddClient
 from dateutil.relativedelta import relativedelta
 import os
 import datetime
@@ -38,8 +38,10 @@ def internal_error(error):
 @app.route('/index.html')
 @login_required
 def index_view():
+    clientCount = models.Clients.query.filter_by(active=True).count()
     return render_template('index.html',
-                            title="Dashboard",)
+                            title="Dashboard",
+                            clientCount=clientCount)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -96,3 +98,42 @@ def settings_view():
         else:
             error = "Current password was incorrect"
     return render_template('settings.html', title="Settings", ChangePassForm=ChangePassForm, GeneralForm=GeneralForm, error=error)
+
+
+@app.route('/clients')
+@login_required
+def clients_view():
+    clients = models.Clients.query.filter_by(active=True).all()
+    return render_template('clients.html', title="Clients", entries=clients)
+
+
+@app.route('/clients/add', methods=['POST', 'GET'])
+@login_required
+def client_add():
+    error = None
+    AddClientForm = AddClient()
+
+    if AddClientForm.validate_on_submit():
+        if models.Clients.query.filter_by(email=AddClientForm.email.data).first() is None:
+            newClient = models.Clients(email=AddClientForm.email.data, date_added=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), ident=AddClientForm.ident.data, ip=AddClientForm.ip.data, ssh=AddClientForm.ssh.data)
+            db.session.add(newClient)
+            db.session.commit()
+
+
+            # Task to create git repo and add to gitolite
+
+            
+            return redirect(url_for('client_admin', client_id=newClient.id))
+        else:
+            error = "Client Name is already in use"
+
+    return render_template('addclient.html', title='Add Client', AddClientForm=AddClientForm, error=error)
+
+
+@app.route('/client/<int:client_id>/admin/')
+@login_required
+def client_admin(client_id):
+    client  = models.Clients.query.get(client_id)
+    return render_template('clientadmin.html',
+                            title=client.ident,
+                            client=client)

@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% set active_page = "add" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_messages %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_tasks %}
+{{ super() }}
+{% endblock %}
+
+{% block dropdown_alerts %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-lg-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Add Client
+            </div>
+            <div class="panel-body">
+                <form method="POST" class="form-horizontal">
+                    {{ AddClientForm.hidden_tag() }}
+                    <div class="form-group">
+                        <label for="email">Client Email: </label>
+                        {{ AddClientForm.email }}<span style="color: red;">*</span>
+                        {% for error in AddClientForm.email.errors %}
+                            <br /><span style="color: red;">[{{error}}]</span>
+                        {% endfor %}
+
+                    </div>
+                    <div class="form-group">
+                        <label for="ip">Client IP:</label>
+                        {{ AddClientForm.ip }}<span style="color: red;">*</span>
+                        {% for error in AddClientForm.ip.errors %}
+                            <br /><span style="color: red;">[{{error}}]</span>
+                        {% endfor %}
+
+                    </div>
+                    <div class="form-group">
+                        <label for="ident">Unique Identifier: </label>
+                        {{ AddClientForm.ident }}<span style="color: red;">*</span>
+                        {% for error in AddClientForm.ident.errors %}
+                            <br /><span style="color: red;">[{{error}}]</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label for="ssh">SSH Key: </label>
+                        {{ AddClientForm.ssh }}<span style="color: red;">*</span>
+                        {% for error in AddClientForm.ssh.errors %}
+                            <br /><span style="color: red;">[{{error}}]</span>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
