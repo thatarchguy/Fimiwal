@@ -115,7 +115,7 @@ def client_add():
 
     if AddClientForm.validate_on_submit():
         if models.Clients.query.filter_by(email=AddClientForm.email.data).first() is None:
-            newClient = models.Clients(email=AddClientForm.email.data, date_added=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), ident=AddClientForm.ident.data, ip=AddClientForm.ip.data, ssh=AddClientForm.ssh.data)
+            newClient = models.Clients(email=AddClientForm.email.data, date_added=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), ident=AddClientForm.ident.data, os=AddClientForm.os.data, ip=AddClientForm.ip.data, directory=AddClientForm.directory.data)
             db.session.add(newClient)
             db.session.commit()
 

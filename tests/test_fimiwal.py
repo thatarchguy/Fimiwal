@@ -8,7 +8,7 @@ test_fimiwal
 Tests for `fimiwal` module.
 """
 
-from urllib.request import urlopen
+import urllib2
 import datetime
 from flask import Flask
 from flask.ext.testing import LiveServerTestCase
@@ -47,5 +47,5 @@ class Testfimiwal(LiveServerTestCase):
         #clientID = models.Clients.query.filter_by(name="testClient").one().id
         #print clientID
 
-        response = urlopen(self.get_server_url() + "/login")
+        response = urllib2.urlopen(self.get_server_url() + "/login")
         self.assertEqual(response.code, 200)

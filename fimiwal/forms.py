@@ -8,7 +8,8 @@ class AddClient(Form):
     email           = StringField(u'email', validators=[DataRequired()])
     ip              = StringField(u'ip')
     ident           = StringField(u'ident')
-    ssh             = StringField(u'ssh')
+    directory       = StringField(u'directory')
+    os              = SelectField(u'os', choices=[('windows', 'Windows'), ('linux', 'GNU/Linux')], validators=[DataRequired()])
 
 
 class SettingsPass(Form):

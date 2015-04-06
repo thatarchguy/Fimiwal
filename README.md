@@ -1,7 +1,7 @@
 ##FIMIWAL [![Build Status](https://travis-ci.org/thatarchguy/Fimiwal.svg)](https://travis-ci.org/thatarchguy/Fimiwal) [![Stories in Ready](https://badge.waffle.io/thatarchguy/Fimiwal.svg?label=ready&title=Ready)](http://waffle.io/thatarchguy/Fimiwal) 
 
 Git content file integrity solution for hosts. 
-Runs on python3.4
+Runs on python2.7
 
 
 

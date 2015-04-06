@@ -11,7 +11,8 @@ class Clients(db.Model):
     date_added  = db.Column(db.String(20))
     ident       = db.Column(db.String(50))
     ip          = db.Column(db.String(20))
-    ssh         = db.Column(db.String(2048))
+    os          = db.Column(db.String(20))
+    directory   = db.Column(db.String(255))
     scans       =  db.relationship('Scans', backref='client',
                                     lazy='dynamic')
     active      = db.Column(db.Boolean, unique=False, default=True)
