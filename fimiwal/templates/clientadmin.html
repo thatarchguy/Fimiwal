@@ -29,6 +29,9 @@
               <tr ><td><strong>Name: </strong></td><td><span id="clientName" class="editable_name">{{ client.ident }}</span></td><td><i class="fa fa-edit fa-fw jeditable-activate"></i></td></tr>
               <tr><td><strong>Date added: </strong></td><td><span id="clientDate" class="editable_date">{{ client.date_added }}</span></td><td>  <i class="fa fa-edit fa-fw jeditable-activate"></i></td></tr>
               <tr><td><strong>Contact Email: </strong></td><td><span id="clientEmail" class="editable_email">{{ client.email }}</span></td><td>  <i class="fa fa-edit fa-fw jeditable-activate"></i></td></tr>
+              <tr><td><strong>Host OS: </strong></td><td><span id="os">{{ client.os }} </span></td><td></td>
+                <tr><td><strong>Directory: </strong></td><td><span id="directory">{{ client.directory }} </span></td><td></td>
+
             </table>
             <a class="btn btn-default" href="/client/{{ client.id }}/scan">Force Scan</a>
             </div>
