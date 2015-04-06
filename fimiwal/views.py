@@ -150,3 +150,13 @@ def client_admin(client_id):
     return render_template('clientadmin.html',
                            title=client.ident,
                            client=client)
+
+
+@app.route('/client/<int:client_id>/scan/')
+@login_required
+def client_scan(client_id):
+    client = models.Clients.query.get(client_id)
+    
+
+
+    return True
