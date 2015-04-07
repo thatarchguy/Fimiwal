@@ -13,6 +13,7 @@ class Clients(db.Model):
     ip = db.Column(db.String(20))
     os = db.Column(db.String(20))
     directory = db.Column(db.String(255))
+    ssh = db.Column(db.String(1024))
     scans = db.relationship('Scans', backref='client', lazy='dynamic')
     active = db.Column(db.Boolean, unique=False, default=True)
     date_rm = db.Column(db.String(20))

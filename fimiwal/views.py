@@ -127,7 +127,8 @@ def client_add():
                                        ident=AddClientForm.ident.data,
                                        os=AddClientForm.os.data,
                                        ip=AddClientForm.ip.data,
-                                       directory=AddClientForm.directory.data)
+                                       directory=AddClientForm.directory.data,
+                                       ssh=AddClientForm.ssh.data)
             db.session.add(newClient)
             db.session.commit()
 

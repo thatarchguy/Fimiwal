@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, BooleanField, SelectField, PasswordField
+from wtforms import StringField, BooleanField, SelectField, PasswordField, TextAreaField
 from wtforms.validators import DataRequired, Required, EqualTo
 from fimiwal import models, db
 
@@ -12,6 +12,7 @@ class AddClient(Form):
     os = SelectField(u'os',
                      choices=[('windows', 'Windows'), ('linux', 'GNU/Linux')],
                      validators=[DataRequired()])
+    ssh = TextAreaField(u'ssh')
 
 
 class SettingsPass(Form):
