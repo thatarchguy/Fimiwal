@@ -20,8 +20,6 @@ class ClientClass:
         self.client = client
 
 
-
-
     def add_client(self):
         client = self.client
         # Add the client's keys to the keydir
@@ -55,5 +53,3 @@ class ClientClass:
             newconf.write("repo " + client.ident + "\n    R    =    " + client.ident)
         move(GITOLITE_DIR + "conf/gitolite.new.conf", GITOLITE_DIR + "conf/gitolite.conf")
         update_gitolite()
-
-

@@ -3,6 +3,7 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from fimiwal import app, db, models, login_manager, bcrypt
 from .forms import SettingsPass, SettingsGeneral, AddClient
 from .client import ClientClass
+from .scan import ScanClass
 from dateutil.relativedelta import relativedelta
 import os
 import datetime
@@ -179,10 +180,10 @@ def client_edit(client_id):
 @login_required
 def client_scan(client_id):
     client = models.Clients.query.get(client_id)
-    
+    newScan = ScanClass(client)
+    newScan.force_scan_linux()
 
-
-    return True
+    return "1"
 
 
 @app.route('/client/<int:client_id>/admin/repo/write')
