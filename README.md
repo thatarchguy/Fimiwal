@@ -3,6 +3,8 @@
 Git content file integrity solution for hosts. 
 Runs on python2.7
 
+Currently uses gitolite on the backend for the git repositories.
+http://gitolite.com/gitolite/gitolite.html#server-side-admin
 
 
 ## Installation

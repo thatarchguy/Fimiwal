@@ -2,6 +2,7 @@ from flask import render_template, request, flash, redirect, url_for
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from fimiwal import app, db, models, login_manager, bcrypt
 from .forms import SettingsPass, SettingsGeneral, AddClient
+from .client import ClientClass
 from dateutil.relativedelta import relativedelta
 import os
 import datetime
@@ -120,7 +121,7 @@ def client_add():
 
     if AddClientForm.validate_on_submit():
         if models.Clients.query.filter_by(
-            email=AddClientForm.email.data).first() is None:
+            email=AddClientForm.ident.data).first() is None:
             newClient = models.Clients(email=AddClientForm.email.data,
                                        date_added=datetime.datetime.now(
                                        ).strftime("%Y-%m-%d %H:%M:%S"),
@@ -133,10 +134,14 @@ def client_add():
             db.session.commit()
 
             # Task to create git repo and add to gitolite
+            clientObj = ClientClass(newClient)            
+            clientObj.add_client()
+
+
 
             return redirect(url_for('client_admin', client_id=newClient.id))
         else:
-            error = "Client Name is already in use"
+            error = "Client Ident is already in use"
 
     return render_template('addclient.html',
                            title='Add Client',
@@ -152,6 +157,23 @@ def client_admin(client_id):
                            title=client.ident,
                            client=client)
 
+@app.route('/client/<int:client_id>/admin/edit', methods=['POST'])
+@login_required
+def client_edit(client_id):
+    attribute = request.form['id']
+    value = request.form['value']
+
+    if attribute == "clientEmail":
+        client = models.Clients.query.get(client_id)
+        client.email = value
+        db.session.commit()
+
+    else:
+        value = "error"
+
+    return value
+
+
 
 @app.route('/client/<int:client_id>/scan/')
 @login_required
@@ -161,3 +183,26 @@ def client_scan(client_id):
 
 
     return True
+
+
+@app.route('/client/<int:client_id>/admin/repo/write')
+@login_required
+def make_write(client_id):
+    client = models.Clients.query.get(client_id)
+    clientObj = ClientClass(client)
+    clientObj.repo_write()
+    client.rw = 1
+    db.session.commit()
+
+    return "1"
+
+@app.route('/client/<int:client_id>/admin/repo/read')
+@login_required
+def make_read(client_id):
+    client = models.Clients.query.get(client_id)
+    clientObj = ClientClass(client)
+    clientObj.repo_read()
+    client.rw = 2
+    db.session.commit()
+
+    return "1"

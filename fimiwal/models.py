@@ -17,6 +17,9 @@ class Clients(db.Model):
     scans = db.relationship('Scans', backref='client', lazy='dynamic')
     active = db.Column(db.Boolean, unique=False, default=True)
     date_rm = db.Column(db.String(20))
+    # rw is read/write perms in gitolite. 1 = rw, 2 = r
+    rw      = db.Column(db.String(1), default=1)
+    
 
     def __repr__(self):
         return '<Email %r>' % (self.email)

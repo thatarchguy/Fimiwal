@@ -26,14 +26,20 @@
             </div>
             <div class="panel-body">
             <table width=60%>
-              <tr ><td><strong>Name: </strong></td><td><span id="clientName" class="editable_name">{{ client.ident }}</span></td><td><i class="fa fa-edit fa-fw jeditable-activate"></i></td></tr>
-              <tr><td><strong>Date added: </strong></td><td><span id="clientDate" class="editable_date">{{ client.date_added }}</span></td><td>  <i class="fa fa-edit fa-fw jeditable-activate"></i></td></tr>
+              <tr ><td><strong>Name: </strong></td><td><span id="clientName">{{ client.ident }}</span></td><td></td></tr>
+              <tr><td><strong>Date added: </strong></td><td><span id="clientDate">{{ client.date_added }}</span></td><td></td></tr>
               <tr><td><strong>Contact Email: </strong></td><td><span id="clientEmail" class="editable_email">{{ client.email }}</span></td><td>  <i class="fa fa-edit fa-fw jeditable-activate"></i></td></tr>
-              <tr><td><strong>Host OS: </strong></td><td><span id="os">{{ client.os }} </span></td><td></td>
-                <tr><td><strong>Directory: </strong></td><td><span id="directory">{{ client.directory }} </span></td><td></td>
+              <tr><td><strong>Client IP: </strong></td><td><span id="ip">{{ client.ip }} </span></td><td></td></tr>
+              <tr><td><strong>Host OS: </strong></td><td><span id="os">{{ client.os }} </span></td><td></td></tr>
+                <tr><td><strong>Directory: </strong></td><td><span id="directory">{{ client.directory }} </span></td><td></td></tr>
 
             </table>
             <a class="btn btn-default" href="/client/{{ client.id }}/scan">Force Scan</a>
+            {% if client.rw == "1" %}
+            <a class="btn btn-danger" onclick="makeRead(this)">Repo is Writeable</a>
+            {% elif client.rw == "2" %}
+             <a class="btn btn-success" onclick="makeWrite(this)">Repo is Read-Only</a>
+            {% endif %}
             </div>
         </div>
     </div>
@@ -86,6 +92,42 @@ $(document).ready(function() {
       $("#deletebtn").attr("disabled", !this.checked);
     });
 });
+
+
+function makeRead(ele) {
+    var formURL = "repo/read"
+    $.ajax(
+    {
+        url: formURL,
+        context: document.body,
+        success:function(data, textStatus, jqXHR)
+        {
+            if (data == "1"){
+                location.reload();
+            } else {
+                alert("OOPS, there was an error!");
+            }
+        }
+    });
+}
+function makeWrite(ele) {
+    var formURL = "repo/write"
+    $.ajax(
+    {
+        url: formURL,
+        context: document.body,
+        success:function(data, textStatus, jqXHR)
+        {
+            if (data == "1"){
+                location.reload();
+            } else {
+                alert("OOPS, there was an error!");
+            }
+        }
+    });
+}
+
+
 
 </script>
 
