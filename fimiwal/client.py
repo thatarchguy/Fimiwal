@@ -3,13 +3,23 @@ class for handling client functions
 """
 from fimiwal import models, db
 from shutil import move
+import subprocess
+
 
 GITOLITE_DIR = "/home/git/.gitolite/"
 
 
+def update_gitolite():
+    subprocess.call(["gitolite", "compile"])
+    subprocess.call(["gitolite", "trigger POST_COMPILE"])
+    
+    return True
+
 class ClientClass:
     def __init__(self, client):
         self.client = client
+
+
 
 
     def add_client(self):
@@ -32,6 +42,7 @@ class ClientClass:
                     newconf.write(line)
             newconf.write("repo " + client.ident + "\n    RW+    =    " + client.ident)
         move(GITOLITE_DIR + "conf/gitolite.new.conf", GITOLITE_DIR + "conf/gitolite.conf")
+        update_gitolite()
         
 
     def repo_read(self):
@@ -43,3 +54,6 @@ class ClientClass:
                     newconf.write(line)
             newconf.write("repo " + client.ident + "\n    R    =    " + client.ident)
         move(GITOLITE_DIR + "conf/gitolite.new.conf", GITOLITE_DIR + "conf/gitolite.conf")
+        update_gitolite()
+
+
