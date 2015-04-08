@@ -32,6 +32,7 @@
               <tr><td><strong>Client IP: </strong></td><td><span id="ip">{{ client.ip }} </span></td><td></td></tr>
               <tr><td><strong>Host OS: </strong></td><td><span id="os">{{ client.os }} </span></td><td></td></tr>
                 <tr><td><strong>Directory: </strong></td><td><span id="directory">{{ client.directory }} </span></td><td></td></tr>
+             <tr><td><strong>Repo: </strong></td><td><span id="clone">git@{{ serverip }}:{{ client.ident}}.git</span></td><td></td></tr>
 
             </table>
             <a class="btn btn-default" href="/client/{{ client.id }}/scan">Force Scan</a>

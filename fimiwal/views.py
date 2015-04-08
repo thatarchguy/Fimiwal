@@ -154,9 +154,11 @@ def client_add():
 @login_required
 def client_admin(client_id):
     client = models.Clients.query.get(client_id)
+    serverip = app.config['PUBLIC_IP']
     return render_template('clientadmin.html',
                            title=client.ident,
-                           client=client)
+                           client=client,
+                           serverip=serverip)
 
 @app.route('/client/<int:client_id>/admin/edit', methods=['POST'])
 @login_required
