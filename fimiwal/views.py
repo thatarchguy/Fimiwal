@@ -179,6 +179,19 @@ def client_edit(client_id):
     return value
 
 
+@app.route('/client/<int:client_id>/delete/')
+@login_required
+def client_delete(client_id):
+    client  = models.Clients.query.get(client_id)
+
+    if client.active is False:
+        return redirect(url_for('index.view'))
+
+    clientObj = ClientClass(client)
+    clientObj.delete_client()
+    
+    return redirect(url_for('index_view'))
+
 
 @app.route('/client/<int:client_id>/scan/')
 @login_required

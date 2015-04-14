@@ -26,9 +26,9 @@ def createdb():
     os.system('python manage.py db init')
     os.system('python manage.py db migrate')
     os.system('python manage.py db upgrade')
-    # Default creds, admin:managrr
+    # Default creds, admin:fimiwal
     user = models.Users(
-        'admin', '$2a$12$Z5tbHyVU4MeBBKbtgGQa3u9FniItNFPhHpK73rKwAVuAWkXN1oYpe',
+        'admin', '$2a$12$OtKZDr9Ax5cPh0ZAKXHbgOLJSxGOLh27BqtBAzD3Yg577NNi2XbSe',
         'admin@example.com')
     db.session.add(user)
     db.session.commit()
