@@ -18,6 +18,7 @@ class ScanClass:
 
     def force_scan_linux(self):
         client = self.client
+        app.logger.info("Initiating scan for: " + str(client.ident))
         # Initiate scan
         self.linux_ssh()
 

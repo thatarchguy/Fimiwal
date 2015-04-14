@@ -8,7 +8,7 @@ http://gitolite.com/gitolite/gitolite.html#server-side-admin
 
 
 ## Installation
-
+---
 ```    
 pip install -r requirements.txt
 # Create the sqlite database
@@ -27,9 +27,19 @@ python manage.py runserver --host=0.0.0.0
 python manage.py shell
 ```
 
-
-
 Vagrant and Dockerfiles are supplied also.
+
+## Clients
+----
+### Linux
+
+By default, fimiwal tries to login through ssh as fimiwal. 
+In a default setup, the server's user would be the git user for simplicity's sake.
+
+Add the server's user ssh public key to the client's fimiwal user authorized_keys. 
+Make sure this user has permissions to the repo.
+
+
 
 ## Contributing
 

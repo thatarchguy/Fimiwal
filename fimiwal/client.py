@@ -24,6 +24,7 @@ class ClientClass:
 
     def add_client(self):
         client = self.client
+        app.logger.info("Adding client to gitolite: " + str(client.ident))
         # Add the client's keys to the keydir
         keydir = open(GITOLITE_DIR + "keydir/" + client.ident + ".pub", 'w+')
         keydir.write(client.ssh)
@@ -35,6 +36,7 @@ class ClientClass:
 
     def repo_write(self):
         client = self.client
+        app.logger.info("Changing perms to write for: " + str(client.ident))
         # Parse the file, change the perms
         with open(GITOLITE_DIR + "conf/gitolite.conf") as oldconf, open(GITOLITE_DIR + "conf/gitolite.new.conf", 'w') as newconf:
             for line in oldconf:
@@ -47,6 +49,7 @@ class ClientClass:
 
     def repo_read(self):
         client = self.client
+        app.logger.info("Changing perms to read for: " + str(client.ident))
         # Parse the file, change the perms
         with open(GITOLITE_DIR + "conf/gitolite.conf") as oldconf, open(GITOLITE_DIR + "conf/gitolite.new.conf", 'w') as newconf:
             for line in oldconf:
@@ -71,7 +74,7 @@ class ClientClass:
         
         update_gitolite()
 
-        app.logger.info("Deleting: " + str(self.client.id))
+        app.logger.info("Deleting: " + str(client.id))
         # Delete scans and set client inactive
         scans = models.Scans.query.filter_by(client_id=self.client.id)
         for scan in scans:
@@ -81,6 +84,6 @@ class ClientClass:
         client.date_rm = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         db.session.add(client)
         db.session.commit()
-        app.logger.info("Deleted client: " + str(self.client.id))
+        app.logger.info("Deleted client: " + str(client.id))
         
         return True 
