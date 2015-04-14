@@ -18,6 +18,9 @@
 {% endblock %}
 
 {% block content %}
+<div id="dialog" title="Title Box">
+<p>Stuff here</p>
+</div>
 <div class="row">
     <div class="col-lg-6">
         <div class="panel panel-default">
@@ -70,9 +73,18 @@
     {% for scan in scans %}
         <tr>
             <td>{{ scan.date }}</td>
-            <td>{{ scan.status }}</td>
-            {% if scan.status == "change" %}
-            <td><a class="btn btn-danger" id="viewDiff" href="/admin/{{ client.id }}/view/{{ scan.id }}">View Diff</a></td>
+            {% if scan.status == "1" %}
+            <td>Files Changed</td>
+            <td><a class="btn btn-danger" id="viewDiff" data-toggle="modal" data-target="#diffModal" data-remote="/client/{{ client.id }}/view/{{ scan.id }}">View Diff</a></td>
+            {% elif scan.status == "2" %}
+            <td>New Files</td>
+            <td><a class="btn btn-danger" id="viewNew" data-toggle="modal" data-target="#newModal" data-remote="/client/{{ client.id }}/view/{{ scan.id }}">View New</a></td> 
+            {% elif scan.status == "3" %}
+            <td>Files Staged</td>
+            <td><a class="btn btn-danger" id="viewStaged" data-toggle="modal" data-target="#stagedModal" data-remote="/client/{{ client.id }}/view/{{ scan.id }}">View Staged</a></td>
+            {% elif scan.status == "0" %}
+            <td>No Changes</td>
+            <td><a class="btn btn-success" id="viewStatus" data-toggle="modal" data-target="#statusModal" data-remote="/client/{{ client.id }}/view/{{ scan.id }}">View Status</a></td>
             {% else %}
             <td></td>
             {% endif %}
@@ -81,7 +93,82 @@
     </tbody>
 </table>
 
+<!-- Modal -->
+<div class="modal fade" id="diffModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title">Modal title</h4>
 
+            </div>
+            <div class="modal-body"><div class="te"></div></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- Modal -->
+<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title">Modal title</h4>
+
+            </div>
+            <div class="modal-body"><div class="te"></div></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- Modal -->
+<div class="modal fade" id="stagedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title">Modal title</h4>
+
+            </div>
+            <div class="modal-body"><div class="te"></div></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- Modal -->
+<div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title">Modal title</h4>
+
+            </div>
+            <div class="modal-body"><div class="te"></div></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 
 {% endblock %}

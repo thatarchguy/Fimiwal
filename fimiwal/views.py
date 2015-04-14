@@ -155,10 +155,12 @@ def client_add():
 def client_admin(client_id):
     client = models.Clients.query.get(client_id)
     serverip = app.config['PUBLIC_IP']
+    scans = models.Scans.query.filter_by(client_id=client.id).all()
     return render_template('clientadmin.html',
                            title=client.ident,
                            client=client,
-                           serverip=serverip)
+                           serverip=serverip,
+                           scans=scans)
 
 @app.route('/client/<int:client_id>/admin/edit', methods=['POST'])
 @login_required
@@ -183,9 +185,19 @@ def client_edit(client_id):
 def client_scan(client_id):
     client = models.Clients.query.get(client_id)
     newScan = ScanClass(client)
-    newScan.force_scan_linux()
+    status = newScan.force_scan_linux()
 
-    return "1"
+    return redirect(url_for('client_admin', client_id=client.id))
+
+
+@app.route('/client/<int:client_id>/view/<int:scan_id>')
+@login_required
+def scan_view(client_id, scan_id):
+    client = models.Clients.query.get(client_id)
+    scan = models.Scans.query.get(scan_id)
+    return render_template('modal.html',
+                            client=client,
+                            scan=scan) 
 
 
 @app.route('/client/<int:client_id>/admin/repo/write')

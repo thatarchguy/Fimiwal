@@ -33,7 +33,7 @@ class Scans(db.Model):
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
     date = db.Column(db.String(20))
     status = db.Column(db.String(10))
-    diff = db.Column(db.Text())
+    data  = db.Column(db.Text())
 
     def __repr__(self):
         return '<Date %r>' % (self.date)
