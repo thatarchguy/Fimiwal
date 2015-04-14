@@ -55,7 +55,7 @@ class ScanClass:
                 sys.exit(1)
 
         # Send the command (non-blocking)
-        stdin, stdout, stderr = ssh.exec_command("git " + command)
+        stdin, stdout, stderr = ssh.exec_command("cd " + client.directory + "; git " + command)
         stderr_data = stderr.read()
         if stderr_data:
             print stderr_data
