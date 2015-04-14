@@ -2,7 +2,7 @@
 Class for handling scanning
 """
 
-from fimiwal import models, db
+from fimiwal import models, db, app
 import sys
 import datetime
 import time

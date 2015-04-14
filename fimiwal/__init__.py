@@ -3,7 +3,9 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.login import LoginManager
 from flask.ext.bcrypt import Bcrypt
-
+from rq import Queue
+from rq.job import Job
+from worker import conn
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
@@ -13,7 +15,7 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 bcrypt = Bcrypt()
-
+q = Queue('high', connection=conn)
 
 import logging
 from logging.handlers import RotatingFileHandler

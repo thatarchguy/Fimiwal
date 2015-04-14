@@ -8,7 +8,9 @@ http://gitolite.com/gitolite/gitolite.html#server-side-admin
 
 
 ## Installation
----
+Requires Redis server
+
+
 ```    
 pip install -r requirements.txt
 # Create the sqlite database
@@ -25,12 +27,14 @@ python manage.py runserver --host=0.0.0.0
 
 # Run a python shell in the program's context
 python manage.py shell
+
+# Run a worker to run scans
+python worker.py
 ```
 
 Vagrant and Dockerfiles are supplied also.
 
 ## Clients
-----
 ### Linux
 
 By default, fimiwal tries to login through ssh as fimiwal. 

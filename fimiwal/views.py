@@ -1,10 +1,11 @@
 from flask import render_template, request, flash, redirect, url_for
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from fimiwal import app, db, models, login_manager, bcrypt
+from fimiwal import app, db, models, login_manager, bcrypt, q
 from .forms import SettingsPass, SettingsGeneral, AddClient
 from .client import ClientClass
 from .scan import ScanClass
 from dateutil.relativedelta import relativedelta
+from rq import get_current_job
 import os
 import datetime
 import time
@@ -198,7 +199,7 @@ def client_delete(client_id):
 def client_scan(client_id):
     client = models.Clients.query.get(client_id)
     newScan = ScanClass(client)
-    status = newScan.force_scan_linux()
+    q.enqueue(newScan.force_scan_linux)
 
     return redirect(url_for('client_admin', client_id=client.id))
 
