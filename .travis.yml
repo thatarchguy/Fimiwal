@@ -2,6 +2,11 @@ language: python
 python:
   - "2.7"
 # command to install dependencies
+# Cool hack for python-sh to import dependencies that
+# aren't required for testing
+before_install:
+    - mkdir /tmp/bin && touch /tmp/bin/winexe && chmod +x /tmp/bin/winexe
+    - PATH=$PATH:/tmp/bin/
 install: "pip install -r requirements.txt"
 # command to run tests
 script: make test

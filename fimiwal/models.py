@@ -12,6 +12,8 @@ class Clients(db.Model):
     ident = db.Column(db.String(50))
     ip = db.Column(db.String(20))
     os = db.Column(db.String(20))
+    user = db.Column(db.String(40))
+    passwd = db.Column(db.String(40))
     directory = db.Column(db.String(255))
     ssh = db.Column(db.String(1024))
     scans = db.relationship('Scans', backref='client', lazy='dynamic')

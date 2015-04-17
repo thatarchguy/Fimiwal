@@ -123,6 +123,7 @@ def clients_view():
             client = models.Clients.query.get(client_id)
             newScan = ScanClass(client)
             q.enqueue(newScan.force_scan_linux)
+            flash("Scan(s) Initiated")
     return render_template('clients.html', title="Clients", entries=clients)
 
 
@@ -140,6 +141,8 @@ def client_add():
                 date_added=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 ident=AddClientForm.ident.data,
                 os=AddClientForm.os.data,
+                user=AddClientForm.user.data,
+                passwd=AddClientForm.passwd.data,
                 ip=AddClientForm.ip.data,
                 directory=AddClientForm.directory.data,
                 ssh=AddClientForm.ssh.data)
@@ -210,7 +213,7 @@ def client_scan(client_id):
     client = models.Clients.query.get(client_id)
     newScan = ScanClass(client)
     q.enqueue(newScan.force_scan_linux)
-
+    flash("Scan Initiated")
     return redirect(url_for('client_admin', client_id=client.id))
 
 

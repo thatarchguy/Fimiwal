@@ -10,8 +10,10 @@ class AddClient(Form):
     ident = StringField(u'ident')
     directory = StringField(u'directory')
     os = SelectField(u'os',
-                     choices=[('windows', 'Windows'), ('linux', 'GNU/Linux')],
+                     choices=[('linux', 'GNU/Linux'), ('windows', 'Windows')],
                      validators=[DataRequired()])
+    user = StringField(u'user')
+    passwd = PasswordField(u'passwd')
     ssh = TextAreaField(u'ssh')
 
 
