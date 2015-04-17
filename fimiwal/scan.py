@@ -14,11 +14,17 @@ class ScanClass:
     def __init__(self, client):
         self.client = client
 
-    def force_scan_linux(self):
+    def scan(self):
         client = self.client
-        app.logger.info("Initiating scan for: " + str(client.ident))
-        # Initiate scan
-        self.linux_ssh()
+        if client.os == "linux":
+            app.logger.info("Initiating scan for: " + str(client.ident))
+            self.linux_ssh()
+        if client.os == "windows":
+            self.windows_winexe()
+
+    def windows_winexe(self):
+        # in progress
+        return True
 
     def linux_ssh(self, command="diff"):
         client = self.client

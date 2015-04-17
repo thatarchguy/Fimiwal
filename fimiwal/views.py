@@ -122,7 +122,7 @@ def clients_view():
                 continue
             client = models.Clients.query.get(client_id)
             newScan = ScanClass(client)
-            q.enqueue(newScan.force_scan_linux)
+            q.enqueue(newScan.scan)
             flash("Scan(s) Initiated")
     return render_template('clients.html', title="Clients", entries=clients)
 
@@ -212,7 +212,7 @@ def client_delete(client_id):
 def client_scan(client_id):
     client = models.Clients.query.get(client_id)
     newScan = ScanClass(client)
-    q.enqueue(newScan.force_scan_linux)
+    q.enqueue(newScan.scan)
     flash("Scan Initiated")
     return redirect(url_for('client_admin', client_id=client.id))
 
