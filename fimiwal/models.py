@@ -18,8 +18,7 @@ class Clients(db.Model):
     active = db.Column(db.Boolean, unique=False, default=True)
     date_rm = db.Column(db.String(20))
     # rw is read/write perms in gitolite. 1 = rw, 2 = r
-    rw      = db.Column(db.String(1), default=1)
-    
+    rw = db.Column(db.String(1), default=1)
 
     def __repr__(self):
         return '<Email %r>' % (self.email)
@@ -33,7 +32,7 @@ class Scans(db.Model):
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
     date = db.Column(db.String(20))
     status = db.Column(db.String(10))
-    data  = db.Column(db.Text())
+    data = db.Column(db.Text())
 
     def __repr__(self):
         return '<Date %r>' % (self.date)

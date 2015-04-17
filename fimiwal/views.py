@@ -135,22 +135,20 @@ def client_add():
     if AddClientForm.validate_on_submit():
         if models.Clients.query.filter_by(
             email=AddClientForm.ident.data).first() is None:
-            newClient = models.Clients(email=AddClientForm.email.data,
-                                       date_added=datetime.datetime.now(
-                                       ).strftime("%Y-%m-%d %H:%M:%S"),
-                                       ident=AddClientForm.ident.data,
-                                       os=AddClientForm.os.data,
-                                       ip=AddClientForm.ip.data,
-                                       directory=AddClientForm.directory.data,
-                                       ssh=AddClientForm.ssh.data)
+            newClient = models.Clients(
+                email=AddClientForm.email.data,
+                date_added=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                ident=AddClientForm.ident.data,
+                os=AddClientForm.os.data,
+                ip=AddClientForm.ip.data,
+                directory=AddClientForm.directory.data,
+                ssh=AddClientForm.ssh.data)
             db.session.add(newClient)
             db.session.commit()
 
             # Task to create git repo and add to gitolite
-            clientObj = ClientClass(newClient)            
+            clientObj = ClientClass(newClient)
             clientObj.add_client()
-
-
 
             return redirect(url_for('client_admin', client_id=newClient.id))
         else:
@@ -174,6 +172,7 @@ def client_admin(client_id):
                            serverip=serverip,
                            scans=scans)
 
+
 @app.route('/client/<int:client_id>/admin/edit', methods=['POST'])
 @login_required
 def client_edit(client_id):
@@ -194,14 +193,14 @@ def client_edit(client_id):
 @app.route('/client/<int:client_id>/delete/')
 @login_required
 def client_delete(client_id):
-    client  = models.Clients.query.get(client_id)
+    client = models.Clients.query.get(client_id)
 
     if client.active is False:
         return redirect(url_for('index.view'))
 
     clientObj = ClientClass(client)
     clientObj.delete_client()
-    
+
     return redirect(url_for('index_view'))
 
 
@@ -220,9 +219,7 @@ def client_scan(client_id):
 def scan_view(client_id, scan_id):
     client = models.Clients.query.get(client_id)
     scan = models.Scans.query.get(scan_id)
-    return render_template('modal.html',
-                            client=client,
-                            scan=scan) 
+    return render_template('modal.html', client=client, scan=scan)
 
 
 @app.route('/client/<int:client_id>/admin/repo/write')
@@ -235,6 +232,7 @@ def make_write(client_id):
     db.session.commit()
 
     return "1"
+
 
 @app.route('/client/<int:client_id>/admin/repo/read')
 @login_required

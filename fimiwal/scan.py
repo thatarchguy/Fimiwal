@@ -11,20 +11,14 @@ import paramiko
 
 
 class ScanClass:
-
     def __init__(self, client):
         self.client = client
 
-
     def force_scan_linux(self):
         client = self.client
-        print client.id
-        print client.email
-        print client.ident
         app.logger.info("Initiating scan for: " + str(client.ident))
         # Initiate scan
         self.linux_ssh()
-
 
     def linux_ssh(self, command="diff"):
         client = self.client
@@ -59,7 +53,8 @@ class ScanClass:
                 sys.exit(1)
 
         # Send the command (non-blocking)
-        stdin, stdout, stderr = ssh.exec_command("cd " + client.directory + "; git " + command)
+        stdin, stdout, stderr = ssh.exec_command(
+            "cd " + client.directory + "; git " + command)
         stderr_data = stderr.read()
         if stderr_data:
             print stderr_data
@@ -74,44 +69,43 @@ class ScanClass:
         print "Command done, closing SSH connection"
         ssh.close()
 
-
     def process(self, data):
         client = self.client
         if "nothing to commit, working directory clean" in data:
             app.logger.info("Scan results: " + client.ident + " - Clean")
             print "Super duper"
-            newScan = models.Scans(client_id=client.id,
-                                   date=datetime.datetime.now(
-                                   ).strftime("%Y-%m-%d %H:%M:%S"),
-                                   status="0",
-                                   data=data) 
+            newScan = models.Scans(
+                client_id=client.id,
+                date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                status="0",
+                data=data)
             db.session.add(newScan)
             db.session.commit()
         elif "diff --git" in data:
             app.logger.info("Scan results: " + client.ident + " - Diff")
-            newScan = models.Scans(client_id=client.id, 
-                                   date=datetime.datetime.now(
-                                   ).strftime("%Y-%m-%d %H:%M:%S"),
-                                   status="1",
-                                   data=data)
+            newScan = models.Scans(
+                client_id=client.id,
+                date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                status="1",
+                data=data)
             db.session.add(newScan)
             db.session.commit()
         elif "Untracked files:" in data:
             app.logger.info("Scan results: " + client.ident + " - New File(s)")
-            newScan = models.Scans(client_id=client.id,
-                                   date=datetime.datetime.now(
-                                   ).strftime("%Y-%m-%d %H:%M:%S"),
-                                   status="2",
-                                   data=data)
+            newScan = models.Scans(
+                client_id=client.id,
+                date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                status="2",
+                data=data)
             db.session.add(newScan)
             db.session.commit()
         elif "Changes to be committed" in data:
             app.logger.info("Scan results: " + client.ident + " - Staged")
-            newScan = models.Scans(client_id=client.id,
-                                   date=datetime.datetime.now(
-                                   ).strftime("%Y-%m-%d %H:%M:%S"),
-                                   status="3",
-                                   data=data)
+            newScan = models.Scans(
+                client_id=client.id,
+                date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                status="3",
+                data=data)
             db.session.add(newScan)
             db.session.commit()
         elif len(data) == 0:
@@ -121,4 +115,5 @@ class ScanClass:
             self.linux_ssh(command="status")
         else:
             print "idk mang"
-            app.logger.info("Scan results: " + client.ident + " - Unknown Error")
+            app.logger.info(
+                "Scan results: " + client.ident + " - Unknown Error")

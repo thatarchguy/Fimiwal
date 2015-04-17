@@ -17,9 +17,10 @@ class AddClient(Form):
 
 class SettingsPass(Form):
     currentPass = PasswordField('currentpass', validators=[DataRequired()])
-    newPass = PasswordField(
-        'New Password', [Required(), EqualTo('newPassVerify',
-                                             message='Passwords must match')])
+    newPass = PasswordField('New Password',
+                            [Required(),
+                             EqualTo('newPassVerify',
+                                     message='Passwords must match')])
     newPassVerify = PasswordField('Repeat Password')
 
 
