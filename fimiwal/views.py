@@ -108,10 +108,21 @@ def settings_view():
                            error=error)
 
 
-@app.route('/clients')
+@app.route('/clients', methods=['GET', 'POST'])
 @login_required
 def clients_view():
     clients = models.Clients.query.filter_by(active=True).all()
+
+    if request.method == 'POST':
+        data = request.form
+        print data
+        for client_id in data:
+            # Skip the checkall button
+            if client_id == "check_ctr":
+                continue
+            client = models.Clients.query.get(client_id)
+            newScan = ScanClass(client)
+            q.enqueue(newScan.force_scan_linux)
     return render_template('clients.html', title="Clients", entries=clients)
 
 
@@ -156,7 +167,7 @@ def client_add():
 def client_admin(client_id):
     client = models.Clients.query.get(client_id)
     serverip = app.config['PUBLIC_IP']
-    scans = models.Scans.query.filter_by(client_id=client.id).all()
+    scans = reversed(models.Scans.query.filter_by(client_id=client.id).all())
     return render_template('clientadmin.html',
                            title=client.ident,
                            client=client,

@@ -18,6 +18,9 @@ class ScanClass:
 
     def force_scan_linux(self):
         client = self.client
+        print client.id
+        print client.email
+        print client.ident
         app.logger.info("Initiating scan for: " + str(client.ident))
         # Initiate scan
         self.linux_ssh()
@@ -75,6 +78,7 @@ class ScanClass:
     def process(self, data):
         client = self.client
         if "nothing to commit, working directory clean" in data:
+            app.logger.info("Scan results: " + client.ident + " - Clean")
             print "Super duper"
             newScan = models.Scans(client_id=client.id,
                                    date=datetime.datetime.now(
@@ -84,7 +88,7 @@ class ScanClass:
             db.session.add(newScan)
             db.session.commit()
         elif "diff --git" in data:
-            print "ALERT ALERT THERE'S DIFF"
+            app.logger.info("Scan results: " + client.ident + " - Diff")
             newScan = models.Scans(client_id=client.id, 
                                    date=datetime.datetime.now(
                                    ).strftime("%Y-%m-%d %H:%M:%S"),
@@ -93,7 +97,7 @@ class ScanClass:
             db.session.add(newScan)
             db.session.commit()
         elif "Untracked files:" in data:
-            print "new files!"
+            app.logger.info("Scan results: " + client.ident + " - New File(s)")
             newScan = models.Scans(client_id=client.id,
                                    date=datetime.datetime.now(
                                    ).strftime("%Y-%m-%d %H:%M:%S"),
@@ -102,7 +106,7 @@ class ScanClass:
             db.session.add(newScan)
             db.session.commit()
         elif "Changes to be committed" in data:
-            print "Someone staged some changes"
+            app.logger.info("Scan results: " + client.ident + " - Staged")
             newScan = models.Scans(client_id=client.id,
                                    date=datetime.datetime.now(
                                    ).strftime("%Y-%m-%d %H:%M:%S"),
@@ -117,3 +121,4 @@ class ScanClass:
             self.linux_ssh(command="status")
         else:
             print "idk mang"
+            app.logger.info("Scan results: " + client.ident + " - Unknown Error")

@@ -18,30 +18,48 @@
 {% endblock %}
 
 {% block content %}
-
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Client Ident</th>
-            <th>Email</th>
-            <th>Date Added</th>
-            <th>IP Address</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entry in entries %}
-        <tr>
-            <td>{{ entry.ident }} </td>
-            <td>{{ entry.email }} </td>
-            <td>{{ entry.date_added }} </td>
-            <td>{{ entry.ip }}</td>
-            <td><a class="btn" href="client/{{ entry.id }}/admin/">Admin</a>
-        </tr>
-     {% endfor %}
-    </tbody>
-</table>
-
+<form name="scanForm" method="POST">
+<input type="checkbox" name="check_ctr" value="yes" onClick="checkAll(this)">
+<b>Check All</b>
+<button type="submit" class="btn btn-default">Scan</button>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Client Ident</th>
+                <th>Email</th>
+                <th>Date Added</th>
+                <th>IP Address</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entry in entries %}
+            <tr>
+                <td><input type="checkbox" name="{{ entry.id }}">
+                <td>{{ entry.ident }} </td>
+                <td>{{ entry.email }} </td>
+                <td>{{ entry.date_added }} </td>
+                <td>{{ entry.ip }}</td>
+                <td><a class="btn" href="client/{{ entry.id }}/admin/">Admin</a>
+            </tr>
+         {% endfor %}
+        </tbody>
+    </table>
+</form>
 
 {% endblock %}
 
+{% block scripts %}
+<script>
+
+function checkAll(bx) {
+  var cbs = document.getElementsByTagName('input');
+  for(var i=0; i < cbs.length; i++) {
+    if(cbs[i].type == 'checkbox') {
+      cbs[i].checked = bx.checked;
+    }
+  }
+}
+</script>
+
+{% endblock %}
