@@ -48,3 +48,11 @@ Make sure this user has permissions to the repo.
 ## Contributing
 
 See the CONTRIBUTING.md page
+
+## Screenshots
+![Fimiwal Dashboard](docs/images/fimiwal_dashboard.png?raw=true)
+![Fimiwal AddClient](docs/images/fimiwal_clientadd.png?raw=true)
+![Fimiwal ClientList](docs/images/fimiwal_clientlist.png?raw=true)
+![Fimiwal ClientWindows](docs/images/fimiwal_windows.png?raw=true)
+![Fimiwal ClientLinux](docs/images/fimiwal_linux.png?raw=true)
+![Fimiwal ClientScan](docs/images/fimiwal_scan.png?raw=true)
