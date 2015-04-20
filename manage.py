@@ -26,10 +26,13 @@ def createdb():
     os.system('python manage.py db init')
     os.system('python manage.py db migrate')
     os.system('python manage.py db upgrade')
-    # Default creds, admin:managrr
-    user = models.Users('admin', '$2a$12$Z5tbHyVU4MeBBKbtgGQa3u9FniItNFPhHpK73rKwAVuAWkXN1oYpe', 'admin@example.com')
+    # Default creds, admin:fimiwal
+    user = models.Users(
+        'admin', '$2a$12$OtKZDr9Ax5cPh0ZAKXHbgOLJSxGOLh27BqtBAzD3Yg577NNi2XbSe',
+        'admin@example.com')
     db.session.add(user)
     db.session.commit()
+
 
 @manager.shell
 def make_shell_context():
@@ -53,13 +56,14 @@ def lint():
 @manager.command
 def clean():
     '''Cleans the codebase'''
-    commands = ["find . -name '*.pyc' -exec rm -f {} \;", "find . -name '*.pyo' -exec rm -f {} \;",
-                "find . -name '*~' -exec rm -f {} \;", "find . -name '__pycache__' -exec rmdir {} \;",
-                "rm -f app.db", "rm -rf migrations", "rm -f fimiwal.log"]
+    commands = ["find . -name '*.pyc' -exec rm -f {} \;",
+                "find . -name '*.pyo' -exec rm -f {} \;",
+                "find . -name '*~' -exec rm -f {} \;",
+                "find . -name '__pycache__' -exec rmdir {} \;", "rm -f app.db",
+                "rm -rf migrations", "rm -f fimiwal.log"]
     for command in commands:
         os.system(command)
 
 
 if __name__ == "__main__":
     manager.run()
-

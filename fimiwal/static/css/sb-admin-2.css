@@ -343,3 +343,34 @@ table.dataTable thead .sorting:after {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+
+/* Custom CSS */
+
+.icon-wrapper{
+    position:relative;
+}
+
+.badge{
+    background: rgba(0,0,0,0.5);
+    width: auto;
+    height: auto;
+    margin: 0;
+    border-radius: 50%;
+    position:absolute;
+    top:-13px;
+    right:-8px;
+    padding:5px;
+}
+
+.form-group label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    text-align: right;
+}
+.form-group input {
+  display: inline-block;
+  float: left;
+}
