@@ -28,17 +28,27 @@ class ScanClass:
         client = self.client
         username = client.user
         passwd = client.passwd
-        print username
-        print passwd
-        command = "winexe -U "  + username + "%" + passwd + " //" + client.ip + " \"cmd /c cd " + client.directory + " & git " + command + "\""
-        print command
-        process = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        out, err = process.communicate()
-        errcode = process.returncode
-        print "+++OUT+++"
-        print out
-        print "+++ERR+++"
-        print err
+        host = str(client.ip)
+        i = 1
+
+        command = "winexe -U "  + username + "%" + passwd + " //" + host + " \"cmd /c cd " + client.directory + " & git " + command + "\""
+        
+        while True:
+            print "Trying to connect to %s (%i/2)" % (host, i)
+        
+            try:
+                process = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                out, err = process.communicate()
+                errcode = process.returncode
+                print "Command successful"
+                break
+            except:
+                print "Could not connect to %s" % host
+                i += 1
+                time.sleep(2)
+            if i == 2:
+                print "Could not connect to %s. Giving up" % host
+                sys.exit(1)
         self.process(out, "windows") 
         
 
