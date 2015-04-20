@@ -3,6 +3,7 @@ Class for handling scanning
 """
 
 from fimiwal import models, db, app
+import subprocess
 import sys
 import datetime
 import time
@@ -22,8 +23,27 @@ class ScanClass:
         if client.os == "windows":
             self.windows_winexe()
 
-    def windows_winexe(self):
+    def windows_winexe(self, command="diff"):
         # in progress
+        client = self.client
+        username = client.user
+        passwd = client.passwd
+        print username
+        print passwd
+        command = "winexe -U "  + username + "%" + passwd + " //" + client.ip + " \"cmd /c cd " + client.directory + " & git " + command + "\""
+        print command
+        process = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = process.communicate()
+        errcode = process.returncode
+        print "+++OUT+++"
+        print out
+        print "+++ERR+++"
+        print err
+        self.process(out, "windows") 
+        
+
+
+
         return True
 
     def linux_ssh(self, command="diff"):
@@ -67,7 +87,7 @@ class ScanClass:
             print "error: not in git repo"
             return "error: not in git repo"
         # Wait for the command to terminate
-        self.process(stdout.read())
+        self.process(stdout.read(), "linux")
 
         #
         # Disconnect from the host
@@ -75,7 +95,7 @@ class ScanClass:
         print "Command done, closing SSH connection"
         ssh.close()
 
-    def process(self, data):
+    def process(self, data, os):
         client = self.client
         if "nothing to commit, working directory clean" in data:
             app.logger.info("Scan results: " + client.ident + " - Clean")
@@ -118,7 +138,10 @@ class ScanClass:
             # If diff comes back clean, there may still be new files 
             # added that we need to check for
             print "diff clean, running status"
-            self.linux_ssh(command="status")
+            if os == "windows":
+                self.windows_winexe(command="status")
+            elif os == "linux":
+                self.linux_ssh(command="status")
         else:
             print "idk mang"
             app.logger.info(
