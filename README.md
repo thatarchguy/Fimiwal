@@ -6,10 +6,10 @@ Runs on python2.7
 Currently uses gitolite on the backend for the git repositories.
 http://gitolite.com/gitolite/gitolite.html#server-side-admin
 
+Uses redis to handle tasks
 
-## Installation
-Requires Redis server
-
+## Quick Installation
+[In-depth installation](docs/install.md)
 
 ```    
 pip install -r requirements.txt
