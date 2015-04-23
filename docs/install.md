@@ -56,6 +56,22 @@ mkdir ~/.gitolite/keydir
 gitolite compile; gitolite trigger POST_COMPILE
 ```
 
+### Setup Winexe
+You can compile from [source](http://sourceforge.net/projects/winexe/)
+```
+sudo apt-get update
+sudo apt-get install build-essential autoconf python-dev
+gzip -dc winexe-1.00.tar.gz | tar xf -
+cd source4
+./autogen.sh
+./configure
+make basics bin/winexe
+```
+or for Ubuntu
+```
+wget http://download.opensuse.org/repositories/home:/uibmz:/opsi:/opsi40-testing/xUbuntu_12.04/amd64/winexe_1.00.1-1_amd64.deb
+dpkg -i winexe_1.00.1-1_amd64.deb
+```
 
 #### Setup Fimiwal
 
