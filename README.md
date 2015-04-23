@@ -38,7 +38,7 @@ Vagrant and Dockerfiles are supplied also.
 
 ## Contributing
 
-See the [contributing.md page](docs/contributing.md]
+See the [contributing.md page](docs/contributing.md)
 
 ## Screenshots
 ![Fimiwal Dashboard](docs/images/fimiwal_dashboard.png?raw=true)
