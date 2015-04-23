@@ -34,15 +34,6 @@ python worker.py
 
 Vagrant and Dockerfiles are supplied also.
 
-## Clients
-### Linux
-
-By default, fimiwal tries to login through ssh as fimiwal. 
-In a default setup, the server's user would be the git user for simplicity's sake.
-
-Add the server's user ssh public key to the client's fimiwal user authorized_keys. 
-Make sure this user has permissions to the repo.
-
 
 
 ## Contributing
