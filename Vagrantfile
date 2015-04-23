@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "vtemian/trusty64-python"
 
    # Application provision
-  config.vm.provision :shell, :inline => "cd /vagrant && pip install -r requirements.txt && python run.py"
+  config.vm.provision :shell, :inline => "cd /vagrant && pip install -r requirements.txt && python manage.py createdb && python manage.py runserver -h 0.0.0.0"
 
    # networking
   config.vm.network :forwarded_port, host: 5000, guest: 5000
