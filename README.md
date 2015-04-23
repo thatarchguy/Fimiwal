@@ -6,10 +6,10 @@ Runs on python2.7
 Currently uses gitolite on the backend for the git repositories.
 http://gitolite.com/gitolite/gitolite.html#server-side-admin
 
+Uses redis to handle tasks
 
-## Installation
-Requires Redis server
-
+## Quick Installation
+[In-depth installation](docs/install.md)
 
 ```    
 pip install -r requirements.txt
@@ -34,20 +34,11 @@ python worker.py
 
 Vagrant and Dockerfiles are supplied also.
 
-## Clients
-### Linux
-
-By default, fimiwal tries to login through ssh as fimiwal. 
-In a default setup, the server's user would be the git user for simplicity's sake.
-
-Add the server's user ssh public key to the client's fimiwal user authorized_keys. 
-Make sure this user has permissions to the repo.
-
 
 
 ## Contributing
 
-See the CONTRIBUTING.md page
+See the [contributing.md page](docs/contributing.md]
 
 ## Screenshots
 ![Fimiwal Dashboard](docs/images/fimiwal_dashboard.png?raw=true)

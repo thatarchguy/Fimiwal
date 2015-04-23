@@ -19,20 +19,20 @@ RUN apt-get install -y build-essential net-tools git vim curl wget tar
 RUN apt-get install -y python python-dev python-distribute python-pip
 
 # Copy the application folder inside the container
-ADD . /grrmanager
+ADD . /Fimiwal
 
 # Get pip to download and install requirements:
-RUN pip install -r /grrmanager/requirements.txt
+RUN pip install -r Fimiwal/requirements.txt
 
 # Expose ports
 EXPOSE 5000
 
 # Set the default directory where CMD will execute
-WORKDIR /grrmanager
+WORKDIR /Fimiwal
 
 # Set the default command to execute    
 # when creating a new container
 # i.e. using CherryPy to serve the application
-CMD python run.py
+CMD python manage.py createdb && python manage.py runserver -h 0.0.0.0
 
 
